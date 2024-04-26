@@ -1,47 +1,85 @@
-import { BookingResponse } from "@/types/booking";
-import { Rooms } from "@/utils/composition.service";
+"use client";
 
-async function getData(params: { [key: string]: string | string[] | undefined }) {
-  const body = {
-    bookingType: params.bookingType,
-    direct: false,
-    location: params.location,
-    departureDate: params.departureDate,
-    duration: params.duration,
-    gateway: params.gateway,
-    partyCompositions: Rooms.parseAndConvert([params.partyCompositions as string]),
-  };
+import { Holiday } from "@/types/booking";
+import SearchResult from "../search-result/search-result.component";
+import styles from "./search-results.module.css";
+import FiltersComponent from "../filters/filters.component";
+import { ChangeEvent, useState } from "react";
 
-  const res = await fetch(
-    "https://www.virginholidays.co.uk/cjs-search-api/search",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    }
-  );
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
-
-export default async function SearchResultsComponent({
-  searchParams,
+export default function SearchResultsComponent({
+  holidays,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  holidays: Holiday[];
 }) {
-  const req = await getData(searchParams);
-  const results: BookingResponse = req;
+  // locally filter but do not change source. on prod call source for filtered
+  const [filteredHolidays, setFilteredHolidays] = useState<Holiday[]>(
+    holidays,
+  );
+  const [filters, setFilters] = useState<string[]>([]);
+
+  // very simple filter. on prod this would be done via api
+  const handleFilterHolidays = (e: ChangeEvent<HTMLInputElement>) => {
+    setFilters((filters) => {
+      if (filters.includes(e.target.value)) {
+        return filters.filter((filter) => filter !== e.target.value);
+      }
+
+      return [...filters, e.target.value];
+    });
+
+    if (e.target.name === "stars") {
+      setFilteredHolidays(() =>
+        holidays.filter((holiday) =>
+          holiday.hotel.content.starRating === e.target.value
+        )
+      );
+    }
+
+    if (e.target.name === "price") {
+      setFilteredHolidays(() =>
+        holidays.filter(
+          (holiday) =>
+            holiday.totalPrice < parseInt(e.target.value as string, 10),
+        )
+      );
+    }
+
+    if (e.target.name === "board-basis") {
+      setFilteredHolidays(() =>
+        holidays.filter(
+          (holiday) => holiday.hotel.boardBasis === e.target.value,
+        )
+      );
+    }
+  };
 
   return (
     <section>
-      <h2>{results?.holidays?.length} results found</h2>
-      <p>Please fill out the filters and results list below&hellip;</p>
+      <>
+        <div className={styles.metaContainer}>
+          <h2 className={styles.resultCount}>
+            <span data-testid="filtered-count">{filteredHolidays.length}</span>
+            {" "}
+            hand picked hotels
+          </h2>
+        </div>
+
+        <div className={styles.container}>
+          <FiltersComponent
+            currentFilters={filters}
+            onFilter={handleFilterHolidays}
+          />
+
+          <div className={styles.resultsList}>
+            {filteredHolidays.map((holiday) => (
+              <SearchResult
+                result={holiday}
+                key={holiday.hotel.id} // use this as no id on holiday
+              />
+            ))}
+          </div>
+        </div>
+      </>
     </section>
   );
 }

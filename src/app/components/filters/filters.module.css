@@ -1,0 +1,42 @@
+.heading {
+  font-size: 2rem;
+	font-family: 'Gotham, Gotham-Light';
+  font-weight: 200;
+  margin-bottom: 2rem;
+}
+
+.filtersContainer { 
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.filtersContainer fieldset {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--token-color-colour-border-minimal);
+}
+
+.filtersContainer fieldset:last-child {
+  padding: 0;
+  border: none;
+}
+
+.filterHeading {
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.filterItem {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.checkbox {
+  border: 1px solid var(--token-color-colour-border-accessible);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 4px;
+  cursor: pointer;
+}

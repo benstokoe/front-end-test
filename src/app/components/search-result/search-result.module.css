@@ -1,0 +1,67 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--token-color-colour-border-minimal);
+}
+
+.infoContainer {
+  padding: 1rem 1.5rem;
+  flex: 1;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 200px;
+}
+
+.hotelName {
+  color: var(--token-color-colour-brand-red);
+  font-family: 'Gotham, Gotham-Medium'; /* use helper functions for this and font sizes in real site */
+  font-size: 2rem;
+  line-height: 2.2rem; 
+  font-weight: 400;
+}
+
+.hotelLocation, .totalPrice {
+  color: var(--token-color-colour-text-secondary);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.priceContainer {
+  background: var(--token-color-colour-background-secondary);
+  border-top: 1px solid var(--token-color-colour-border-minimal);
+  padding: 1rem 1.5rem;
+  font-size: 1.2rem;
+}
+
+.pricePPContainer {
+  font-family: 'Gotham, Gotham-Medium'; /* use helper functions for this and font sizes in real site */
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+.pricePP {
+  font-size: 2.4rem;
+}
+
+.viewDetailsLink {
+  display: block;
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  color: white;
+  background: var(--token-color-colour-brand-red);
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.points {
+  color: var(--token-color-colour-brand-red);
+}
