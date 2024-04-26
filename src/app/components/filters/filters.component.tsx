@@ -14,13 +14,14 @@ const filters = [
     id: "price",
   },
   {
-    heading: "Board basis",
+    heading: "Hotel Facilities",
     values: [
-      "Room Only",
-      "Bed and Breakfast",
-      "Self Catering",
+      "Bar",
+      "Free Parking",
+      "Laundry Service",
+      "Whirlpool",
     ],
-    id: "board-basis",
+    id: "hotel-facilities",
   },
 ];
 

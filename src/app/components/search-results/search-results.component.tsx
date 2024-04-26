@@ -44,10 +44,11 @@ export default function SearchResultsComponent({
       );
     }
 
-    if (e.target.name === "board-basis") {
+    if (e.target.name === "hotel-facilities") {
       setFilteredHolidays(() =>
         holidays.filter(
-          (holiday) => holiday.hotel.boardBasis === e.target.value,
+          (holiday) =>
+            holiday.hotel.content.hotelFacilities.includes(e.target.value),
         )
       );
     }
